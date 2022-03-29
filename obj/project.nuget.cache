@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "iIXqiVG+tX1GAfQ2NpPCG/lXxWDmlzraoWxzwDliBY5BiCudJ1k4vehRihvH0JQSZ0b6oRqceRuYXoF+3oSsxw==",
+  "success": true,
+  "projectFilePath": "D:\\Project.Repositories\\FerthsArmory\\FerthsArmory.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lucas\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\lucas\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
