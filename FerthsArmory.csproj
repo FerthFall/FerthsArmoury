@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>        
   </PropertyGroup>
 
   <ItemGroup>
@@ -81,5 +81,9 @@
       <HintPath>libs\Wwise.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="powershell.exe D:\Project.Repositories\FerthsArmory\ThunderStore\PackThunderStore.ps1" />
+  </Target>
 
 </Project>

@@ -23,7 +23,7 @@ namespace FerthsArmory
     {
         public const string ModGuid = "com.Ferth.FerthsArmoury";
         public const string ModName = "Ferth's Armoury";
-        public const string ModVer = "0.0.2";
+        public const string ModVer = "0.0.3";
 
         public static AssetBundle MainAssets;
 

@@ -42,12 +42,12 @@ namespace FerthsArmory.Items
 
         public override void CreateConfig(ConfigFile config)
         {
-            SoulOnKillBaseChance = config.Bind<float>("Item: " + ItemName, "Percent chance to gain a stack on regular mob kill", 5, "How often should a regular mob kill grant a stack.");
-            SoulOnKillStackingChance = config.Bind<float>("Item: " + ItemName, "Percent chance to gain a stack on regular mob kill with additional Absolutions", 1, "How often should a regular mob kill grant a stack per additional Absolution.");
-            SoulOnBossKillBaseAmount = config.Bind<float>("Item: " + ItemName, "Base amount of stacks granted on elite or greater kill", 2, "How many stacks should an elite or greater mob grant.");
-            SoulOnBossKillStackingAmount = config.Bind<float>("Item: " + ItemName, "Amount of stacks granted on elite or greater kill with additional Absolutions", 1, "How many stacks should an eliete or greater mob grant per additional Absoluton.");
-            MaxCritHealBaseAmount = config.Bind<float>("Item: " + ItemName, "Amount of health healed per hit with 100% crit chance or greater", 3, "How much health should be restored per hit when the player exceeds 100% crit chance.");
-            MaxCritHealStackingAmount = config.Bind<float>("Item: " + ItemName, "Amount of health healed per hit with 100% crit chance or greater with additional Absolutions", 3, "How much health should be restored per hit when the player exceeds 100% crit chance per additional Absolution.");
+            SoulOnKillBaseChance = config.Bind<float>("Item: " + ItemName, "Base percent chance to gain a stack on regular mob kill.", 5, "How often should a regular mob kill grant a stack.");
+            SoulOnKillStackingChance = config.Bind<float>("Item: " + ItemName, "Stacking percent chance to gain a stack on regular mob.", 1, "How much do additional Stacks of Absolution contribute to stack generation.");
+            SoulOnBossKillBaseAmount = config.Bind<float>("Item: " + ItemName, "Base amount of stacks granted on elite or greater kill.", 2, "How many stacks should an elite or greater mob grant.");
+            SoulOnBossKillStackingAmount = config.Bind<float>("Item: " + ItemName, "Stacking amount of stacks granted on elite or greater kill.", 1, "How much do additional stacks of absolution contribute to eliete or greater kills.");
+            MaxCritHealBaseAmount = config.Bind<float>("Item: " + ItemName, "Base amount of health healed per hit with 100% crit chance or greater.", 3, "How much health should be restored per hit when the player exceeds 100% crit chance.");
+            MaxCritHealStackingAmount = config.Bind<float>("Item: " + ItemName, "Stacking amount of health healed per hit with 100% crit chance or greater.", 3, "How much do additional stacks of absolution contribute to cirt healing.");
         }
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
@@ -58,7 +58,18 @@ namespace FerthsArmory.Items
         public override void Hooks()
         {
             GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
-            GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageGlobal;            
+            GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageGlobal;
+            On.RoR2.CharacterBody.OnInventoryChanged += LostAbsolution;
+        }
+
+        private void LostAbsolution(On.RoR2.CharacterBody.orig_OnInventoryChanged orig, CharacterBody self)
+        {
+            orig(self);
+
+            if (GetCount(self) <= 0)
+            {
+                self.inventory.RemoveItem(AbsolutionStacks.instance.ItemDef.itemIndex, GetCountSpecific(self, AbsolutionStacks.instance.ItemDef));
+            }
         }
 
         private void GlobalEventManager_onCharacterDeathGlobal(DamageReport report)
